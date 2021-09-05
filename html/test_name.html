@@ -14,7 +14,9 @@
 <!--    第二种方式：使用函数-->
     姓名2：{{fullname()}}<br/>
 <!--    计算属性：就是拿着原来的属性去计算去使用-->
-    姓名3：{{full}}
+    姓名3：{{full}}<br/>
+    姓名4：{{watchname}}
+
 
 
 </div>
@@ -27,7 +29,9 @@
         //原始的属性
         data:{
             fristname:'xie',
-            lastname:'wenwen'
+            lastname:'wenwen',
+            //因为watch监听引入的属性
+            watchname:'xie-wenwen'
         },
         //计算属性
         computed:{
@@ -46,10 +50,25 @@
                     this.lastname=arr[1];
                 }
             }
+            //简写形式，只有get方法是的时候 才可以简写，标签里面调用的话就是直接{{full}}就是，后面不用加()
+            // full:function () {
+            //     return this.fristname+'-'+this.lastname;
+            // }
         },
         methods: {
             fullname() {
                 return this.fristname + '-' + this.lastname;
+            }
+        },
+        //使用新的监听去改造
+        watch:{
+            //监听姓
+            fristname(newValue,oldValue){
+                this.watchname=newValue+'-'+this.lastname;
+            },
+            //监听名
+            lastname(newValue,oldValue){
+                this.watchname=this.fristname+'-'+newValue;
             }
         }
     });

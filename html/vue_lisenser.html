@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>监听属性</title>
+    <script type="text/javascript" src="../js/vue.js">
+    </script>
+</head>
+<body>
+<div id="root">
+    <h2>今天的天气{{info}}</h2>
+    <button @click="changew">切换天气</button>
+<!--    直接写在模版中也可以，如果比较简单的话可以直接写在模版中
+        这边是在vm下找对应的属性
+-->
+    <button @click="ishot=!ishot">切换天气</button>
+    <br/>
+    <h2>{{numbers.a}}</h2><button @click="numbers.a++">改变a的值</button>
+    <h2>{{numbers.b}}</h2><button @click="numbers.b++">改变b的值</button>
+</div>
+</body>
+<script type="text/javascript">
+     Vue.config.productionTip=false;
+     let vm=new Vue({
+         el:'#root',
+         data:{
+             ishot:false,
+             numbers:{
+                 a:12,
+                 b:14
+             }
+         },
+         computed:{
+             info:function () {
+                return this.ishot?'炎热':'凉爽';
+             }
+         },
+         methods:{
+             changew(){
+                 this.ishot=!this.ishot;
+             }
+         },
+         //监视属性
+         watch:{
+             //在这里写要监听的函数
+             immediate:true,//初始化也监视
+             ishot:{
+                 handler(newValue,oldValue){
+                     console.log('ishot修改了',newValue,oldValue);
+                 }
+
+             }
+             // ,
+             // //当多层级的接结构中，需要监听下面的某个属性
+             // 'numbers.a':{
+             //     handler(newValue, oldValue) {
+             //         console.log(newValue,oldValue);
+             //     }
+             // }
+             ,
+             numbers:{
+                 //深度监视，当多层级数据结构中，会全部进行监视
+                 //普通的watch下是默认不开启的，如果有需要可以手动开启
+                 deep:true,
+                 handler(newValue,oldValue){
+                     console.log(newValue,oldValue);
+                 }
+             }
+             //简写模式，不考虑多层级，不考虑深度监测
+             //省略handler
+             ,
+             ishot(newValue,oldValue){
+                 console.log('ishot修改了',newValue,oldValue);
+             }
+
+         }
+     });
+     //第二种监视方式，在vm上直接绑定
+     // vm.$watch('ishot',{
+     //     //在这里写要监听的函数
+     //     immediate:true,//初始化也监视
+     //     ishot:{
+     //         handler(newValue,oldValue){
+     //             console.log('ishot修改了',newValue,oldValue);
+     //         }
+     //
+     //     }
+     // });
+
+    //总结：
+    //1 computed能完成的功能，watch都能完成
+    //2 watch能完成的功能，computed不一定能完成，例如：watch可以进行异步操作，定时器
+    //重要的原则
+    //1 所有被vue管理的函数，最好写成普通函数，这样this指向的vm或组件实例对象
+    //2 所有不被vue管理的函数（定时器的回调函数，ajax的回调函数等，promise的回调函数），最好写成箭头函数，这样的this指向的才是vm或者组件实例对象
+
+
+</script>
+</html>
