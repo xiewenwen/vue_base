@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test_name</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    姓：<input v-model="fristname"><br/>
+    名：<input v-model="lastname"><br/>
+<!--    第一种：插值方式-->
+    姓名：{{fristname}}-{{lastname}}<br/>
+<!--    第二种方式：使用函数-->
+    姓名2：{{fullname()}}<br/>
+<!--    计算属性：就是拿着原来的属性去计算去使用-->
+    姓名3：{{full}}
+
+
+</div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip=true;
+    let vm=new Vue({
+        el:'#root',
+        //原始的属性
+        data:{
+            fristname:'xie',
+            lastname:'wenwen'
+        },
+        //计算属性
+        computed:{
+            full:{
+                //get的调用的时机：
+                // 1 初次读取full 放在缓存中，后续如果调用都会使用缓存的数据
+                //2 依赖的数据发生变化
+                get(){
+                    return this.fristname+'-'+this.lastname;
+                },
+                //当full手动修改值的时候会调用
+                //其实本质是修改原属属性的值，触发full的改变
+                set(value){
+                    const arr=value.split('-');
+                    this.fristname=arr[0];
+                    this.lastname=arr[1];
+                }
+            }
+        },
+        methods: {
+            fullname() {
+                return this.fristname + '-' + this.lastname;
+            }
+        }
+    });
+
+</script>
+</html>

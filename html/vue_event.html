@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h2>{{name}}</h2>
+    <h2>{{age}}</h2>
+    <button v-on:click="showinfo1">click me</button>
+<!--    第二种绑方式-->
+    <button @click="showinfo2(88,$event)">click me2</button>
+<!--    vue中修饰事件的方法，组织默认事件，就是标签a不会发生默认的跳转
+        6大修饰符：
+         1 prevent 组织默认的事件 i
+         2 stop 阻止事件的冒泡 i 当多曾嵌套，会不停的查找执行，加上该属性后，不会再调用
+         3 once 事件只触发一次 i 触发一次再次点击就不可以了
+         4 capture 使用事件的捕获
+         5 self 只有event.target是当前操作的元素时候才能触发的事件
+         6 passive 事件的默认行为立即执行 无需等待事件的回调完毕执行
+
+         多层结构的事件：捕获是从外到内，冒泡是从内到外
+
+-->
+    <a href="https://www.baidu.com" @click.prevent="showinfo3">check me3</a>
+
+<!--  键盘绑定事件  当键盘点击enter后触发-->
+    <input type="text" placeholder="press" @keyup.enter="showinfo4">
+
+<!--    修饰符也可以连着写例如：@click.prevent.stop-->
+
+</div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip=false;//组织vue在启动的时候产生提示
+    let vm=new Vue({
+        el:'#root',
+        data:{
+            name:'xiewenwen',
+            age:18
+        },
+        //vue事件的绑定，在methods中定义，尽量不要用箭头函数
+        methods:{
+            showinfo1(event){
+                //此时的this是vm，如果是箭头函数，找到的是全局的window
+                alert('hello ');
+            },
+            showinfo2(num,event){
+                //此时的this是vm，如果是箭头函数，找到的是全局的window
+                alert(num);
+                console.log(event);
+            },
+            showinfo3(e){
+                //e.preventDefault(); 取消默认的事件
+                alert('hello ');
+            },
+            showinfo4(e){
+                //获取触发事件的值
+                console.log(e.target.value);
+            }
+        }
+    });
+</script>
+</html>
