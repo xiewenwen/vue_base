@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染</title>
+    <style>
+        .basic{
+            width: 200px;
+            height: 200px;
+        }
+        .happy{
+            background-color: burlywood;
+        }
+        .sad{
+            background-color: aqua;
+        }
+        .normal{
+            background-color: brown;
+        }
+
+    </style>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+<!--适用vue中的v-show控制是否隐藏-->
+    <div class="basic" :class="mood" @click="changemood" v-show="a"></div>
+    <br/>
+    <div class="basic" :class="mood" @click="changemood" v-if="a"></div>
+    <div v-show="n===1">ashin</div>
+    <div v-show="n===2">masha</div>
+    <div v-show="n===3">stone</div>
+<!--    if和else if之间不可以被打断-->
+<!--    v-show是把标签隐藏  v-if是把该结构从页面上删除，找不到-->
+    <div v-if="n===4">ming</div>
+    <div v-else-if="n===5">monster</div>
+    <div v-else>mayday</div>
+<!--   模版template的适用，只是包裹起来，不会影响结构，但是这个模版只能配合v-if-->
+    <template v-if="n===6">
+
+    </template>
+
+</div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip=false;//组织vue在启动的时候产生提示
+    let vm=new Vue({
+        el:'#root',
+        data:{
+            name:'sad',
+            mood:'happy',
+            classarr:['sad','basic'],
+            styleObj:{
+                fontSize:'40px'
+            },
+            a:false,
+            n:1
+        },
+        methods:{
+            changemood(){
+                const arr=['happy','sad','normal'];
+                let num=Math.floor(Math.random()*3);
+                this.mood=arr[num];
+                console.log(this.mood);
+            }
+        }
+    });
+</script>
+</html>

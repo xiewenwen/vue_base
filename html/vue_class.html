@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绑定样式</title>
+    <style>
+        .basic{
+            width: 200px;
+            height: 200px;
+        }
+        .happy{
+            background-color: burlywood;
+        }
+        .sad{
+            background-color: aqua;
+        }
+        .normal{
+            background-color: brown;
+        }
+
+    </style>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+<!--    绑定css样式，字符串写法，使用于样式和类名不确定，需要动态定-->
+<div class="basic" :class="mood" @click="changemood"></div>
+<br/>
+<!--    绑定样式，数组写法，数组中存放多个样式，适用于样式个数不确定-->
+<!--    绑定style样式可写成对象，直接用style执行-->
+    <div :class="classarr" :style="styleObj">数组</div>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip=false;//组织vue在启动的时候产生提示
+    let vm=new Vue({
+        el:'#root',
+        data:{
+            name:'sad',
+            mood:'happy',
+            classarr:['sad','basic'],
+            styleObj:{
+                fontSize:'40px'
+            }
+        },
+        methods:{
+            changemood(){
+                const arr=['happy','sad','normal'];
+                let num=Math.floor(Math.random()*3);
+                this.mood=arr[num];
+                console.log(this.mood);
+            }
+        }
+    });
+</script>
+</html>

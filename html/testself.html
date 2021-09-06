@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试箭头函数</title>
+    <script type="text/javascript">
+        // console.log(this);//window
+        // function getnum(a,b) {
+        //     arr=[1,2,34];
+        //     arr.sort(function (a) {
+        //         console.log(this.a);
+        //     })
+        // }
+
+        obj={
+            name:'ashin',
+            play:function () {
+                console.log(this);
+            },
+            play2:()=>{
+                console.log(this);
+            },
+            play3:function (a,b) {
+                this.a=a;
+                this.b=b;
+                console.log(this,a,b);
+            }
+        }
+
+        function test(){
+            console.log(this);
+        }
+        let a=12;
+        let b=23;
+        let test2=(a,b) =>{
+            console.log(this,a,b);
+        }
+
+        obj2={
+            name:'xiewenwen'
+        }
+        test.call(obj);//this是obj
+        test.call(obj2);//this是obj2
+        test2(23,55);//this是window
+        test2.call(obj2);//无效
+
+
+         // obj.play();//obj
+         // obj.play2();//window
+         // obj.play3(3,4);//obj
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

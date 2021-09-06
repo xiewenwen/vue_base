@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础列表渲染</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+<!--    列表的过滤-->
+    <input id="search" v-model="keyword">
+    <ul>
+        <!--        遍历数组下的对象-->
+        <li v-for="p in fpersons" :key="p.id">
+            {{p.id}} -{{p.name}}-{{p.age}}
+        </li>
+    </ul>
+    <ul>
+<!--        遍历数组下的对象-->
+        <li v-for="p in persons" :key="p.id">
+           {{p.id}} -{{p.name}}-{{p.age}}
+        </li>
+    </ul>
+    <ul>
+<!--        遍历对象中的value和key-->
+        <li v-for="(value,key) in car" :key="key">
+            {{value}} -{{key}}
+        </li>
+    </ul>
+</div>
+
+</body>
+<script>
+    Vue.config.productionTip=false;//组织vue在启动的时候产生提示
+    let vm=new Vue({
+        el: '#root',
+        data: {
+            persons:[
+                {id:'001',name:'ashin',age:12},
+                {id:'002',name:'stone',age:19}
+            ],
+            car:{
+                color:'balck',
+                bands:'addi',
+                price:'60w'
+            },
+            keyword:'',
+            fpersons: []
+        },
+        watch:{
+            keyword: {
+                immediate: true,
+                handler(val){
+                    //filter过滤的数组会返回一个新的数组需要接收下
+                    this.fpersons=this.persons.filter(function (p) {
+                        console.log(val);
+                        return p.name.indexOf(val)!==-1;
+                    })
+                }
+
+            }
+
+
+        }
+    })
+</script>
+</html>
