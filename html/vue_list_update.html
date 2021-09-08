@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础列表渲染</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h2>{{shcool.name}}</h2><h2>{{shcool.age}}</h2>
+    <button @click="sort=1">年龄升序</button><button @click="sort=2">年龄降序</button>
+    <button @click="updateinfo">update info</button>
+    <!--    列表的过滤-->
+    <input id="search" v-model="keyword">
+    <ul>
+        <!--        遍历数组下的对象-->
+        <li v-for="p in persons" :key="p.id">
+            {{p.id}} -{{p.name}}-{{p.age}}
+        </li>
+    </ul>
+    <button @click="updatelove">update love</button>
+    <ul>
+<!--        数组是没有get  set，没有办法检测到-->
+        <li v-for="l in love">
+            {{l}}
+        </li>
+
+    </ul>
+
+</div>
+
+</body>
+<script>
+    Vue.config.productionTip=false;//组织vue在启动的时候产生提示
+    let vm=new Vue({
+        el: '#root',
+        data: {
+            persons:[
+                {id:'001',name:'ashin',age:12},
+                {id:'002',name:'stone',age:19}
+            ],
+            shcool:{
+                name:'xiewenwen',
+                age:23
+            },
+            keyword:'',
+            sort:1,
+            name:'xiewenwen',
+            age:12,
+            love:['eat','drink','sleep']
+        },
+        methods:{
+            updateinfo(){
+
+                // this.persons[0]={id:'001',name:'ashin22',age:1222};
+                Vue.set(this.persons[0],'name','ashin2222');
+                Vue.set(this.shcool,'name','image');
+                Vue.set(this.shcool,'age','12');
+            },
+            updatelove(){
+                //vue下数组只能通过调用数组的方法检测变化，进行更新，直接赋值不行
+                this.love.push('study');
+            }
+        }
+    })
+</script>
+</html>

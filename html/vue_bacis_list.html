@@ -7,6 +7,7 @@
 </head>
 <body>
 <div id="root">
+    <button @click="sort==1">年龄升序</button><button @click="sort==2">年龄降序</button>
 <!--    列表的过滤-->
     <input id="search" v-model="keyword">
     <ul>
@@ -45,7 +46,8 @@
                 price:'60w'
             },
             keyword:'',
-            fpersons: []
+            fpersons: [],
+            sort:1
         },
         watch:{
             keyword: {

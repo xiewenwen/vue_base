@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<!--表单数据的绑定-->
+<div id="root">
+    <form @submit.prevent="demo">
+  <label>user:</label>
+        <input type="text" v-model="user"><br/>
+    <label>pwd:</label>
+        <input type="text" v-model="pwd"><br/>
+        <label>age:</label><input type="text" v-model.number="age"><br/>
+    <label>gender:</label>
+        <input type="radio" name="gender" value="men" v-model="gender">men
+        <input name="gender" type="radio" value="women" v-model="gender">women<br/>
+    <label>hobby:</label>
+        <input type="checkbox" name="hobby" value="eat" v-model="hobby">eat
+        <input type="checkbox" name="hobby" value="drink" v-model="hobby">drink
+        <input type="checkbox" name="hobby" value="sleep" v-model="hobby">sleep<br/>
+    <label>from:</label>
+        <select v-model="from">
+       <option value="china">china</option>
+       <option value="usa">usa</option>
+      </select><br/>
+<!--        v-model.lazy可以控制当鼠标失去焦点的时候进行加载数据-->
+        <label>info:</label><input type="text" v-model.lazy="ainfo"><br/>
+<!--        <span>{{ainfo}}</span>-->
+        <button>sub</button>
+    </form>
+<!--过滤器 可叠加使用，传递的值是上一个处理的结果
+过滤器本质还是一个函数，需要有返回值-->
+ <h2>{{time | timeget | timesplice}}</h2>
+
+</div>
+
+</body>
+<script>
+    Vue.config.productionTip=false;//组织vue在启动的时候产生提示
+    let vm=new Vue({
+        el: '#root',
+        data: {
+            user:'',
+            pwd:'',
+            gender:'',
+            hobby:[],
+            from:'',
+            age:0,
+            ainfo:'',
+            time:'2021-09-09'
+        },
+        methods:{
+            demo(){
+
+            }
+        },
+        filters:{
+            timeget(value){
+                return Date.now();
+            },
+            timesplice(value){
+                return value.toString().slice(0,4);
+            }
+
+        }
+    })
+</script>
+</html>
