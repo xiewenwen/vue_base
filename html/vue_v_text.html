@@ -6,6 +6,35 @@
         <script type="text/javascript" src="../js/vue.js"></script>
     </head>
     <body>
-
+        <div id='root'>
+        <h3>{{name}}</h3>
+        <h3 v-text="mood"></h3>
+        <h3 v-html="testhtml"></h3>
+        <h3 v-if="false">true</h3>
+        <h3 v-show="false">show</h3>
+        <h3 v-for="p in persons">{{p.name}}</h3>
+        <button @click='testf'>change</button>
+    </div>
     </body>
+    <script type="text/javascript">
+        Vue.config.productionTip=false;//组织vue在启动的时候产生提示
+    let vm=new Vue({
+        el:'#root',
+        data:{
+            name:'sad',
+            mood:'happy',
+            testhtml:'zhe ge shi html',
+            persons:[
+                {id:'001',name:'ashin',age:12},
+                {id:'002',name:'stone',age:19}
+            ]
+        },
+        methods:{
+            testf(){
+                this.name='sad sad'
+            }
+        }
+    });
+
+    </script>
 </html>
