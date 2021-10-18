@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head>
+        <meta charset="UTF-8">
+        <title>自定义指令</title>
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+        <div v-big:value='10'></div>
+            <input type="text" v-fbind:value='n'>
+            <!-- <input type="text" v-big:value='10'> -->
+            <br/>
+            <span>{{n}}</span>
+            <button @click='n++'>click on me</button>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+    Vue.config.productionTip=false;
+    //指令的全局写法，这样别的容器下也可以使用该指令
+    Vue.directive('fbind',{
+        //指令和元素进行绑定
+        bind(element,binding){
+                    element.value=binding.value;
+                },
+                //指令所在的元素插入页面
+                inserted(element,binding){
+                    element.focus();
+                },
+                //更新模版
+                update(element,binding){
+                    element.value=binding.value;
+                }
+    });
+
+    let vm=new Vue({
+        el:'#root',
+        data:
+        {
+            name:'xiewwen',
+            n:56
+        },
+        // 自定义函数
+        directives:{
+            //big函数被调用的时机 
+            //1 指令和元素绑定成功时候（一上来） 
+            //2 指令所在的模版被重新解析时候
+            //普通无处理写法 简写
+            big(element,binding){
+                element.innerText=binding.value*10;
+            },
+            // fbind(element,binding){
+
+            // }
+            //对象写法，一般来说是在绑定插入中，进行元素的处理，原本的写的方式
+            fbind:{
+                //该对象下的this是windows
+                //指令和元素进行绑定
+                bind(element,binding){
+                    element.value=binding.value;
+                },
+                //指令所在的元素插入页面
+                inserted(element,binding){
+                    element.focus();
+                },
+                //更新模版
+                update(element,binding){
+                    element.value=binding.value;
+                }
+            }
+            //备注：指令只能在当前vm下使用，当再有其他的容器的时候，无法调用本指令，全局指令见最上面的写法
+        }
+    });
+    </script>
+</html>
