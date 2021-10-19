@@ -12,7 +12,9 @@
             <!-- <input type="text" v-big:value='10'> -->
             <br/>
             <span>{{n}}</span>
-            <button @click='n++'>click on me</button>
+            <button @click='n++'>click on me</button><br/>
+            <h3 v-gtest:value='band[1]'></h3><br/>
+        
         </div>
     </body>
 
@@ -34,14 +36,15 @@
                 }
     });
 
-    let vm=new Vue({
+    const vm=new Vue({
         el:'#root',
         data:
         {
             name:'xiewwen',
-            n:56
+            n:56,
+            band:['ashin','masha','stone','ming']
         },
-        // 自定义函数
+        // 自定义函数directives
         directives:{
             //big函数被调用的时机 
             //1 指令和元素绑定成功时候（一上来） 
@@ -68,6 +71,14 @@
                 update(element,binding){
                     element.value=binding.value;
                 }
+            },
+            //指令实现数组中的元素按照顺序展示
+            gtest(element,binding){
+                const newname='ashin'
+                console.log('element'+element);
+                console.log('binding'+binding.value);
+                element.innerText=binding.value+newname;
+            
             }
             //备注：指令只能在当前vm下使用，当再有其他的容器的时候，无法调用本指令，全局指令见最上面的写法
         }
