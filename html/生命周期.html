@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>生命周期</title>
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <!-- opacity是css样式中的透明度，下面是简写的样式 -->
+            <h2 :style='{opacity}'>welcome to Vue</h2>
+        </div>
+
+    </body>
+    <script type="text/javascript">
+    Vue.config.productionTip=false;
+    const vm=new Vue({
+        el:'#root',
+        data:{
+            opacity:0.5
+        },
+        //vue完成模版的解析并且把真实的dom放入页面（挂载完毕）调用mounted
+        //生命周期函数，this都是vm
+        //mounted之前和之后都有函数，一起构成生命周期钩子函数
+        mounted(){
+         setInterval(()=>{
+             //this对象此时是vue的dom
+            this.opacity -=0.01
+            if(this.opacity<=0) this.opacity=1
+        },16);
+               
+        }
+    });
+    //外部定时器（不推荐）
+    //定时器控制透明度
+    // setInterval(()=>{
+    //     vm.opacity -=0.01
+    //     if(vm.opacity<=0) vm.opacity=1
+    // },16);
+
+    </script>
+</html>
