@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>生命周期2</title>
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <h2>{{n}}</h2>
+            <button @click='n++'>N++</button>
+            <button @click='bye'>destroy</button>
+        </div>
+
+    </body>
+    <script type="text/javascript">
+    Vue.config.productionTip=false;
+    const vm=new Vue({
+        el:'#root',
+        data:{
+            opacity:0.5,
+            n:1
+        },
+        methods:{
+            bye(){
+                //解绑自定义事件和事件监听，不解绑不是原生的dom事件
+                this.$destroy();//vm.$destroy();
+            }
+            
+        },
+        //初始化，此时还不能创建vm下的data和methos等方法
+        beforeCreate(){
+            console.log('beforecreate');
+            //debugger;
+        },
+        //初始化，数据代理等，开始创建了data等vm相关属性
+        created(){
+            console.log('created');
+        },
+        //页面中呈现的是未经vue编译的dom结构
+        //对所有的dom操作，最终都不奏效
+        beforeMounted(){
+
+        },
+        //页面中呈现的是经过vue编译过的dom
+        //一般在此过程中开启定时器，发送网络请求，订阅消息，绑定自定义事件等出初始化操作
+        mounted(){
+
+        },
+        //此时数据是新的，页面是旧的，所以是页面尚未和数据保持同步
+        beforeUpdated(){
+
+        },
+        //此时数据是新的，页面也是新的，已经数据和页面已经同步了
+        updated(){
+
+        },
+        //此时vm中所有的data methods指定都处于可用状态，马上将要消除
+        //一般在此阶段会关闭定时器，取消订阅消息，解绑自定义事件等首位操作
+        //可访问数据可调用方法，但是不会在修改对应的数据了 就是不会触发更新了
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        }
+    });
+    
+    </script>
+</html>
