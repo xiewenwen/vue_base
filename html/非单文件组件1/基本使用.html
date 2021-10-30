@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>组件的使用</title>
-        <script type="text/javascript" src="../../js/vue.js"></script>
-    </head>
-    <body>
-        <div id="root">
-            <!-- 引入定义的组件 -->
-            <school></school>
-            <student></student>
-            <hello></hello>  
-        </div>
 
-    </body>
-    <script type="text/javascript">
-    Vue.config.productionTip=false;
+<head>
+    <meta charset="utf-8" />
+    <title>组件的使用</title>
+    <script type="text/javascript" src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 引入定义的组件 -->
+        <school></school>
+        <student></student>
+        <hello></hello>
+        <sun></sun>
+    </div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false;
     //创建组件
-    const school=Vue.extend({
+    const school = Vue.extend({
         // el:'#root' 组件下el项不可以写，由总的vm控制
-        template:`
-
+        template: `
             <div>
                 <h2>test this</h2>
                 <h2>{{schoolName}}</h2>
                 <h2>{{address}}</h2>
               </div>
         `,
-        
+
         //组件下的data必须写成函数样式
-        data(){
-            return{
-            schoolName:'my school',
-            address:'zhejiang'
+        data() {
+            return {
+                schoolName: 'my school',
+                address: 'zhejiang'
             }
         }
     })
 
-    const hello=Vue.extend({
-        template:`
+    const hello = Vue.extend({
+        template: `
+        <div>
+            <h2>test this</h2>
+            <h2>{{test}}</h2>   
+        </div>`,
 
+        //组件下的data必须写成函数样式
+        data() {
+            return {
+                test: 'test hello'
+            }
+        }
+    })
+
+        const band = Vue.extend({
+            template: `
 <div>
     <h2>test this</h2>
     <h2>{{test}}</h2>
@@ -47,34 +63,16 @@
   </div>
 `,
 
-//组件下的data必须写成函数样式
-data(){
-return{
-test:'test hello'
-}
-}
+        //组件下的data必须写成函数样式
+        data() {
+            return {
+                test: 'myband'
+            }
+        }
     })
 
-    const band=Vue.extend({
-        template:`
-
-<div>
-    <h2>test this</h2>
-    <h2>{{test}}</h2>
-    
-  </div>
-`,
-
-//组件下的data必须写成函数样式
-data(){
-return{
-test:'myband'
-}
-}
-    })
-
-    const student=Vue.extend({
-        template:`
+    const student = Vue.extend({
+        template: `
             <div>
                 <h2>{{studentName}}</h2>
                 <h2>{{age}}</h2>
@@ -82,18 +80,18 @@ test:'myband'
                 <button @click='showname'>click me to show what this</button>
               </div>
         `,
-        data(){
-            return{
-            studentName:'my ashin',
-            age:'12'
+        data() {
+            return {
+                studentName: 'my ashin',
+                age: '12'
             }
         },
         //组件里面使用组件，但是组件一定要先定义好，然后在用 否则是找不到的
-        components:{
+        components: {
             band
         },
-        methods:{
-            showname(){
+        methods: {
+            showname() {
                 //组件下的this指的是VueComponet,就是当前的student，就是组件实例对象
                 console.log(this);
                 console.log(this.age);
@@ -104,16 +102,43 @@ test:'myband'
 
     })
 
+    const sun=Vue.extend({
+        
+        template:`
+            <div>
+                <h2>hello my name is{{name}},i from {{from}}</h2>
+                <button @click='play'>show what i can do</button>
+                <button @click='day'>show today</button>
+                
+            </div>
+        `,
+        data(){
+            return {
+                name:'ashin',
+                from:'taiwan.China'
+            }
+        },
+        methods:{
+            play(){
+                console.log('i can play band')
+            },
+            day(){
+                console.log('today is sunday happy')
+            }
+        }
+    })
+
     //全局注册组件(要在最上面注册，不可以写在最下面，不知道为啥？？？？？)
     Vue.component('hello', hello);
 
     //vm模型，统一管理组件
     new Vue({
-        el:'#root',
+        el: '#root',
         //组件的引用（局部注册）
-        components:{
+        components: {
             school,
-            student
+            student,
+            sun
         }
     })
     //组件的本质和类型，是构造函数VueCompoents
@@ -121,6 +146,7 @@ test:'myband'
     //彩蛋：学习了组件 应该有个小彩蛋吧
     //test口红
 
-    
-    </script>
+
+</script>
+
 </html>
