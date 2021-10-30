@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>组件的使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <sun></sun>
+    </div>
+
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false;
+    //创建一个构造函数
+    function Demo(){
+        this.a=1;
+        this.b=1;
+    }
+    //实例化构造函数
+    const d=new Demo();
+    console.log(Demo.prototype);//显示原型属性
+    console.log(d.__proto__);//隐式原型属性
+    //通过操作显示原型属性，来控制原型对象，追加x
+    Demo.prototype.x=99;
+    //显示和隐式原型本质是指向同一个原型对象的，所以二者是相等
+    //在显示追加的原型属性，实例化后的对象也可以找到该属性
+    console.log(Demo.prototype===d.__proto__);
+    //实例化对象下属性也有x=99
+    console.log(d);
+    console.log(d.x); 
+
+    ///////////////////////////////
+    //vue组件内置关系
+    const sun=Vue.extend({
+        
+        template:`
+            <div>
+                <h2>hello my name is{{name}},i from {{from}}</h2>
+                <button @click='play'>show what i can do</button>
+                <button @click='day'>show today</button>
+                
+            </div>
+        `,
+        data(){
+            return {
+                name:'ashin',
+                from:'taiwan.China'
+            }
+        },
+        methods:{
+            play(){
+                console.log('i can play band')
+            },
+            day(){
+                console.log('today is sunday happy')
+            }
+        }
+    })
+
+    new Vue({
+        el:'#root',
+        components:{
+            sun
+        }
+    })
+    console.log(sun.prototype.__proto__===Vue.prototype);
+    //组件的原型对象执行vm，所以组件实例对象可以访问到vue原型上的属性和方法
+
+    //赋值给vue对象
+    Vue.prototype.x=99;
+    //打印组件下访问到的vue下的参数  99
+    console.log(sun.prototype.x)
+
+    //备注：vc实例本来应该下的原型对象应该是指向object的，但是vue强行把vc实例的原型执行了vm身上，所以vc可访问到vm下的原型，找不到则由vm向上着object
+
+    
+</script>
